@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+}
+
+:root {
+    --slate-950: #020617;
+    --slate-900: #0f172a;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-100: #f1f5f9;
+    --slate-50: #f8fafc;
+    --slate-300: #cbd5e1;
+
+    --green-600: #16a34a;
+    --green-700: #15803d;
+
+    --yellow-400: #facc15;
+    --yellow-500: #f59e0b;
+
+    --red-600: #dc2626;
+    --red-700: #b91c1c;
+
+    --blue-600: #2563eb;
+    --blue-700: #1d4ed8;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    /* filter: blur(2px); */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.profile-picture-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-picture-container > p {
+    font-size: 1.2rem;
+    color: var(--slate-950)
+}
+
+.profile-picture-container > img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.icon {
+    width: 25px;
+}
+
+.new-button {
+    background-color: var(--slate-400);
+    width: 150px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color .2s;
+}
+
+.new-button:hover {
+    background-color: var(--slate-500);
+}
+
+.your-list {
+    padding: 15px;
+}
+
+.your-list > hr {
+    margin-top: 20px;
+    border: 1px solid var(--slate-50);
+}
+
+.your-list  > h1 {
+    color: var(--slate-950)
+}
+
+.search-form {
+    /* width: 80vw; */
+    /* height: 80vh; */
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    position: absolute;
+    background-color: var(--slate-50);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    /* display: none; */
+    padding: 25px;
+    border-radius: 15px;
+    overflow-y: scroll;
+    /* overflow-x: hidden; */
+}
+
+.search-bar {
+    position: relative;
+    display: flex;
+    gap: 10px;
+}
+
+.input-container > .icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 10px;
+    margin: auto;   
+    pointer-events: none;
+}
+
+.search-bar > .input-container {
+   flex: 1;
+   position: relative;
+}
+
+.input-container > input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--slate-300);
+    color: var(--slate-950);
+}
+
+.input-container > input[type="text"]::placeholder {
+    color: var(--slate-100);
+}
+
+.search-bar > button {
+    font-family: inherit;
+    font-weight: 400;
+    padding: 10px 20px;
+    border: none;
+    background-color: var(--slate-400);
+    color: var(--slate-50);
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.search-result {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 15px;
+}
+
+.result {
+    display: grid;
+    grid-template-columns: 80px max-content;
+    grid-template-rows: repeat(3, max-content);
+    column-gap: 10px;
+    row-gap: 5px;
+    background-color: var(--slate-50);
+    border-radius: 10px;
+    color: var(--slate-950);   
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.result > p {
+    align-self: center;
+    font-size: 1rem;
+}
+
+@media screen and (max-device-width: 480px){
+    body{
+      -webkit-text-size-adjust: 100%;
+    }
+}
+
+.result > img {
+    grid-row: 1 / 4;
+    border-radius: 10px;
+    object-fit: cover;
+    height: 113.06px;
+}
+
+.result > .episodes {
+    grid-column: 2 / 3;
+}
+
+.result > .buttons {
+    display: flex;
+    gap: 10px;
+    grid-column: 2 / 3;
+}
+
+.result > .add {
+    grid-column: 2 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color .2s;
+    width: max-content;
+    padding: 5px 20px;
+    font-size: 0.8rem;
+    color: var(--slate-50);
+    font-weight: bold;
+    background-color: var(--blue-600);
+}
+
+.add:hover {
+    background-color: var(--blue-700);
+}
+
+/* .plan-to-watch {
+    background-color: var(--yellow-400);
+}
+
+.plan-to-watch:hover {
+    background-color: var(--yellow-500);
+}
+
+.dropped {
+    background-color: var(--red-600);
+}
+
+.dropped:hover {
+    background-color: var(--red-700);
+} */

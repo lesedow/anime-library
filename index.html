@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnimeList</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="profile-picture-container">
+                <img src="img/gojo.jpg" alt="Profile Picture">
+                <p>Gojo Satoru</p>
+            </div>
+            <div id="new" class="new-button">
+                <img src="icons/plus.svg" alt="New Button" class="icon">
+            </div>
+        </div>
+        <div class="your-list">
+            <h1>Your List</h1>
+            <hr>
+            <div class="list-container">
+
+            </div>
+        </div>
+    </div>
+    <div class="search-form">
+        <form action="#" id="search-form">
+            <div class="search-bar">
+                <div class="input-container">
+                    <input id="search-bar" type="text" placeholder="Naruto, One Piece, etc..">
+                    <img src="icons/magnify.svg" alt="Saerch Icon" class="icon">
+                </div>
+                <button type="submit">Search</button>
+            </div>
+            <div class="search-result" id="results">
+                <!-- <div class="result">
+                    <img id="first" src="#" alt="">
+                    <p class="title">Jujutsu Kaisen</p>
+                    <p class="episodes">Number of episodes: 24</p>
+                    <div class="add">
+                        <img src="icons/plus.svg" alt="Add Icon" class="icon">
+                    </div>
+                </div> -->
+            </div>
+        </form>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
