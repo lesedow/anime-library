@@ -10,5 +10,6 @@ Features:
 TODO:
 - Fix edit panel
 - Add option to remove entries from the list
+- Be able to edit the number of episodes that you watched on currently airing anime
 - Make the code cleaner
 - Implement cloud storage with firebase 
