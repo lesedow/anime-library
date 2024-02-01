@@ -31,6 +31,13 @@ let currentlySelectedCategory = "all";
 function loadFromStorage()
 {
     animeList = JSON.parse(localStorage.getItem("animeList"));
+    
+    if (!animeList)
+    {
+        animeList = [];
+        return;
+    }
+
     animeList.forEach((anime, index) => {
         list.appendChild(generateAnimeElement(anime, index));
     });
