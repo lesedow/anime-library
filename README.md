@@ -2,6 +2,8 @@
 
 A project made for The Odin Project using the Jikan.moe API
 
+![Screenshot](./img/screenshot.png)
+
 Features:
 - You can search for any anime
 - You can add it to your list and it will be saved in the browser storage
