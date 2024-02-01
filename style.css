@@ -12,6 +12,8 @@ body {
 
 :root {
     --slate-950: #020617;
+    --slate-950-transparent: rgb(2 6 23 / 0.8);
+
     --slate-900: #0f172a;
     --slate-400: #94a3b8;
     --slate-500: #64748b;
@@ -100,21 +102,80 @@ img {
     color: var(--slate-950)
 }
 
+.list-container {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    text-align: center;
+}
+ 
+.anime {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--slate-950);
+    background-color: var(--slate-50);
+}
+
+.banner-container {
+    position: relative;
+    pointer-events: none;
+}
+
+.anime > p {
+    padding: 10px;
+    align-self: center;
+}
+
+.banner-container > img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.edit {
+    padding: 10px;
+    background-color: var(--slate-950);
+    border-radius: 10px;
+    cursor: pointer;
+    position: absolute;
+    margin: 10px;
+}
+
+.edit > .icon {
+    pointer-events: none;
+    width: 20px;
+}
+
+.episodes-watched {
+    padding: 10px;
+    background-color: var(--slate-950-transparent);
+    width: 100%;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    color: var(--slate-50);  
+}   
+
 .search-form {
-    /* width: 80vw; */
+    width: 500px;
     /* height: 80vh; */
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    position: absolute;
+    position: fixed;
     background-color: var(--slate-50);
     top: 0;
     bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
+    transform: translateX(-100%);
+    /* margin: auto; */
     /* display: none; */
     padding: 25px;
-    border-radius: 15px;
-    overflow-y: scroll;
+    overflow-y: auto;
     /* overflow-x: hidden; */
 }
 
@@ -154,22 +215,22 @@ img {
     color: var(--slate-100);
 }
 
-.search-bar > button {
+button {
     font-family: inherit;
     font-weight: 400;
     padding: 10px 20px;
     border: none;
-    background-color: var(--slate-400);
     color: var(--slate-50);
     cursor: pointer;
     border-radius: 10px;
     font-size: 1rem;
+    background-color: var(--slate-400);
 }
 
 .search-result {
     margin-top: 10px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: 1fr;
     gap: 15px;
 }
 
@@ -202,16 +263,11 @@ img {
     grid-row: 1 / 4;
     border-radius: 10px;
     object-fit: cover;
+    width: 100%;    
     height: 113.06px;
 }
 
 .result > .episodes {
-    grid-column: 2 / 3;
-}
-
-.result > .buttons {
-    display: flex;
-    gap: 10px;
     grid-column: 2 / 3;
 }
 
@@ -235,18 +291,170 @@ img {
     background-color: var(--blue-700);
 }
 
-/* .plan-to-watch {
-    background-color: var(--yellow-400);
+.categories {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(min-content, max-content));
+    gap: 10px;
+    color: var(--slate-50);
+    margin-top: 10px;
 }
 
-.plan-to-watch:hover {
-    background-color: var(--yellow-500);
+.categories > * {
+    padding: 5px 15px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.categories > *.selected {
+    border: 2px solid var(--slate-950);
+}
+
+.all {
+    background-color: var(--blue-600);
+    padding: 5px 15px;
 }
 
 .dropped {
     background-color: var(--red-600);
 }
 
-.dropped:hover {
-    background-color: var(--red-700);
-} */
+.plan-to-watch {
+    background-color: var(--yellow-400);
+}
+
+.currently-watching {
+    background-color: var(--green-600);
+}
+
+.slide-in {
+    animation: slide-in 0.5s forwards;
+}
+
+.slide-out {
+    animation: slide-out 0.5s forwards;
+}
+
+.edit-panel {
+    position: fixed;
+    background-color: var(--slate-50);
+    /* width: clamp(400px, 30vw, 500px); */
+    color: var(--slate-950);
+    padding: 25px;
+    top: 0;
+    right: 0;     
+    left: 0;    
+    transform: translateX(-100%);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.edit-panel form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.edit-panel > form > .category-container {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 10px;
+    align-items: center;
+}
+
+.edit-panel > form > .options {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 10px;
+}
+
+.cancel,
+.close {
+    background-color: var(--red-600);
+    color: var(--slate-50);
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.edit-panel input,
+.edit-panel select {
+    appearance: none;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--slate-300);
+    color: var(--slate-950);
+    width: 100%;
+}
+
+.edit-panel input[type="number"]::-webkit-inner-spin-button {
+    appearance: none;
+    padding-right: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.category-container > div {
+    position: relative;
+}
+
+.total-episodes {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    right: 10px;   
+    pointer-events: none;
+}
+    
+@keyframes slide-in {
+    100% { transform: translateX(0%); }
+}
+    
+@keyframes slide-out {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+}
+
+@keyframes slide-in-y {
+    100% { transform: translateY(0%); }
+}
+
+@keyframes slide-out-y {
+    0% { transform: translateY(0%); }
+    100% { transform: translateY(-100%); }
+}
+
+@media only screen and (max-width: 600px)
+{
+    .categories {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .search-form {
+        left: 0;
+        right: 0;
+        width: auto;
+    }
+
+    .categories > * {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .container {
+        width: 100%;
+    }
+}

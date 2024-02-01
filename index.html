@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AnimeList</title>
     <link rel="stylesheet" href="style.css">
+    <script src="./src/index.js" type="module" defer></script>
 </head>
 <body>
     <div class="container">
@@ -20,8 +21,13 @@
         <div class="your-list">
             <h1>Your List</h1>
             <hr>
-            <div class="list-container">
-
+            <div class="categories">
+                <div data-category="all" class="all selected">All</div>
+                <div data-category="watching" class="currently-watching">Currently Watching</div>
+                <div data-category="plan-to-watch" class="plan-to-watch">Plan to watch</div>
+                <div data-category="dropped" class="dropped">Dropped</div>
+            </div>
+            <div id="list" class="list-container">
             </div>
         </div>
     </div>
@@ -30,22 +36,37 @@
             <div class="search-bar">
                 <div class="input-container">
                     <input id="search-bar" type="text" placeholder="Naruto, One Piece, etc..">
-                    <img src="icons/magnify.svg" alt="Saerch Icon" class="icon">
+                    <img src="icons/magnify.svg" alt="Search Icon" class="icon">
                 </div>
                 <button type="submit">Search</button>
+                <div class="close" id="close">Close</div>
             </div>
             <div class="search-result" id="results">
-                <!-- <div class="result">
-                    <img id="first" src="#" alt="">
-                    <p class="title">Jujutsu Kaisen</p>
-                    <p class="episodes">Number of episodes: 24</p>
-                    <div class="add">
-                        <img src="icons/plus.svg" alt="Add Icon" class="icon">
-                    </div>
-                </div> -->
             </div>
         </form>
     </div>
-    <script src="index.js"></script>
+    <div class="edit-panel">
+       <form action="#" id="edit-form">
+            <h2 id="anime-title">Default</h2>
+            <div class="category-container">
+                <label for="category">Category</label>
+                <select name="category" id="category">
+                    <option value="watching">Currently Watching</option>
+                    <option value="dropped">Dropped</option>
+                    <option value="plan-to-watch">Plan to watch</option>
+                    <option value="completed">Completed</option>
+                </select>
+                <label for="ep-watched">Episodes</label>
+                <div>
+                    <input type="number" id="ep-watched">
+                    <p class="total-episodes" id="total-episodes">/0</p>
+                </div>
+            </div>
+            <div class="options">
+                <button type="submit">Save</button>
+                <div id="cancel" class="cancel">Cancel</div>
+            </div>
+       </form> 
+    </div>
 </body>
 </html>
