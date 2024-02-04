@@ -343,16 +343,25 @@ button {
     animation: slide-out 0.5s forwards;
 }
 
+.slide-in-y {
+    animation: slide-in-y 0.5s forwards;
+}
+
+.slide-out-y {
+    animation: slide-out-y 0.5s forwards;
+}
+
 .edit-panel {
     position: fixed;
     background-color: var(--slate-50);
-    /* width: clamp(400px, 30vw, 500px); */
+    width: 450px;
     color: var(--slate-950);
     padding: 25px;
     top: 0;
     right: 0;     
     left: 0;    
-    transform: translateX(-100%);
+    margin: 0 auto;
+    transform: translateY(-102%);
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
@@ -376,7 +385,7 @@ button {
     gap: 10px;
 }
 
-.cancel,
+.remove,
 .close {
     background-color: var(--red-600);
     color: var(--slate-50);
@@ -440,7 +449,7 @@ button {
 
 @keyframes slide-out-y {
     0% { transform: translateY(0%); }
-    100% { transform: translateY(-100%); }
+    100% { transform: translateY(-102%); }
 }
 
 @media only screen and (max-width: 650px)
@@ -466,5 +475,10 @@ button {
 
     .container {
         width: 100%;
+    }
+
+    .edit-panel {
+        width: auto;
+        margin: 0;
     }
 }
