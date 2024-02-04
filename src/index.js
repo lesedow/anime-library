@@ -4,6 +4,7 @@ import { Anime } from './anime.js';
 const searchBar = document.getElementById("search-bar");
 const searchForm = document.getElementById("search-form");
 const results = document.getElementById("results");
+const searchTab = searchForm.parentElement;
 const close = document.getElementById("close");
 
 const newBtn = document.getElementById("new");
@@ -16,17 +17,20 @@ const epWatched = document.getElementById("ep-watched");
 const animeTitle = document.getElementById("anime-title");
 const editPanel = document.querySelector(".edit-panel");
 const totalEp = document.getElementById("total-episodes");
-const cancel = document.getElementById("cancel");
+const remove = document.getElementById("remove");
 
 // Category Buttons
 const categories = document.querySelector(".categories");
 
 const baseURL = "https://api.jikan.moe/v4/anime?q=";
+let searchData;
 let animeList = [];
 
 let currentlyEditedAnime;
 let currentlyPressedEditButton;
 let currentlySelectedCategory = "all";
+
+let editPanelOpened = false;
 
 function loadFromStorage()
 {
@@ -129,7 +133,31 @@ function handleEditSave(event)
     const currentAnimeElement = currentlyPressedEditButton.parentElement.firstElementChild.querySelector("p");
     currentAnimeElement.textContent = `Watched: ${currentlyEditedAnime.episodesWatched}`;
 
-    toggleEditPanel();
+    editPanelOpened = false;
+    toggleClass(editPanel, 'slide-in-y', 'slide-out-y');
+}
+
+function regenerateDisplayedList()
+{
+    currentlySelectedCategory == "all" 
+        ? displayAllAnime()
+        : filterAnime(currentlySelectedCategory);
+}
+
+function handleEditRemove()
+{
+    const index = currentlyPressedEditButton.getAttribute('data-index');
+    animeList.splice(index, 1);
+
+    localStorage.setItem("animeList", JSON.stringify(animeList));
+
+    const currentAnimeElement = currentlyPressedEditButton.parentElement;
+    list.removeChild(currentAnimeElement);
+
+    regenerateDisplayedList();
+
+    editPanelOpened = false;
+    toggleClass(editPanel, 'slide-in-y', 'slide-out-y');
 }
 
 function showEditPanel(index)
@@ -149,7 +177,12 @@ function handleEditButton(event)
 
     currentlyPressedEditButton = event.target;
 
-    toggleEditPanel();
+    if (!editPanelOpened)
+    {
+        toggleClass(editPanel, 'slide-in-y', 'slide-out-y');
+        editPanelOpened = true;  
+    }
+
     showEditPanel(index);
 }
 
@@ -187,7 +220,7 @@ function addToList(data)
     list.appendChild(generateAnimeElement(animeObject, animeList.length - 1));
 }
 
-function generateResult(anime)
+function generateResult(anime, index)
 {
     const resultContainer = document.createElement("div");
     resultContainer.classList.add("result");
@@ -198,8 +231,8 @@ function generateResult(anime)
         <img src="${anime.images.jpg.image_url}" alt="Anime Banner">
         <p>${anime.title}</p>
         <p>Episodes: ${anime.episodes || status }</p>
-        <div class="add">
-            <p>Add to list</p>
+        <div class="add" data-index="${index}">
+            Add to list
         </div>
     `); 
     
@@ -207,21 +240,14 @@ function generateResult(anime)
 }
 
 
-function createSearchResult(searchData)
+function createSearchResult()
 {
     let animeResults = [];
-    searchData.data.forEach((anime) => {
-        animeResults.push(generateResult(anime));
+    searchData.data.forEach((anime, index) => {
+        animeResults.push(generateResult(anime, index));
     });
 
     results.replaceChildren(...animeResults);
-
-    let addButtons = document.querySelectorAll(".add");
-    addButtons.forEach((btn, index) => {
-        btn.addEventListener("click", (e) => {
-            addToList(searchData.data[index]);
-        })
-    })
 }
 
 async function getAnime(searchValue)
@@ -232,52 +258,51 @@ async function getAnime(searchValue)
     return animeData;
 }
 
-function toggleSideBar()
+function toggleClass(element, firstClass, secondClass)
 {
-    let searchTab = searchForm.parentElement;
-    if(searchTab.classList.contains('slide-in'))
+    const firstClassEnabled = element.classList.toggle(firstClass);
+    if (!firstClassEnabled)
     {
-        searchTab.classList.remove('slide-in');
-        searchTab.classList.add('slide-out')
-    } else {
-        searchTab.classList.remove('slide-out');
-        searchTab.classList.add('slide-in')
+        element.classList.add(secondClass);
+        return;
     }
+
+    element.classList.remove(secondClass);
 }
 
-function toggleEditPanel()
+function handleSearchSubmit(event)
 {
-    let editTab = editForm.parentElement;
-    if(editTab.classList.contains('slide-in'))
-    {
-        editTab.classList.remove('slide-in');
-        editTab.classList.add('slide-out')
-    } else {
-        editTab.classList.remove('slide-out');
-        editTab.classList.add('slide-in');
-    }
-}
-
-newBtn.addEventListener("click",toggleSideBar);
-close.addEventListener("click", toggleSideBar);
-
-searchForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+    event.preventDefault();
 
     getAnime(searchBar.value).then((response) => {
         if (response.data.length == 0)
         {
             throw new Error("No results for your search!");
         }
-        createSearchResult(response);    
+        searchData = response;
+        createSearchResult();    
     })
     .catch((error) => {
        alert(error);
     });
+}
 
-});
+function handleAddButton(event)
+{
+    const index = event.target.getAttribute('data-index');
+    console.log(event.target)
+    if (!index) return;
 
+    addToList(searchData.data[index]);
+}
+
+
+newBtn.addEventListener("click", () => toggleClass(searchTab, 'slide-in', 'slide-out'));
+close.addEventListener("click", () => toggleClass(searchTab, 'slide-in', 'slide-out'));
+searchForm.addEventListener("submit", handleSearchSubmit);
 list.addEventListener("click", handleEditButton);
 editForm.addEventListener("submit", handleEditSave);
 categories.addEventListener("click", handleCategoryButton);
 document.addEventListener("DOMContentLoaded", loadFromStorage);
+remove.addEventListener("click", handleEditRemove);
+results.addEventListener("click", handleAddButton);
